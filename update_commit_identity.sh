@@ -19,25 +19,29 @@
 
 # Change these variables accordingly
 NAME="coderMeira"
-EMAIL="fredericomeiraa@gmail.com"
+EMAIL="differentemail@differentemail.com"
 
 # Setting right name and email on user's git config, to avoid having to run this script again in the future
-git config --global user.name "$NAME"
-git config --global user.email "$EMAIL"
+if ! git config --get user.name | grep "$NAME";
+then
+        git config --global user.name "$NAME"
+fi;
+if ! git config --get user.email | grep "$EMAIL";
+then
+        git config --global user.email "$EMAIL"
+fi;
 
 # Modify the current repo's commits names and emails
 git filter-branch --force --commit-filter '
-        if [ $GIT_COMMITTER_EMAIL != '$EMAIL' -o $GIT_COMMITTER_EMAIL != '$EMAIL' ];
+        if [ "$GIT_COMMITTER_EMAIL" != '"$EMAIL"' -o "$GIT_COMMITTER_EMAIL" != '"$EMAIL"' ];
         then
-                export GIT_COMMITTER_NAME='$NAME';
-                export GIT_AUTHOR_NAME='$NAME';
-                export GIT_COMMITTER_EMAIL='$EMAIL';
-                export GIT_AUTHOR_EMAIL='$EMAIL';
+                export GIT_COMMITTER_NAME='"$NAME"';
+                export GIT_AUTHOR_NAME='"$NAME"';
+                export GIT_COMMITTER_EMAIL='"$EMAIL"';
+                export GIT_AUTHOR_EMAIL='"$EMAIL"';
         fi;
         git commit-tree $@
 ' --tag-name-filter cat -- --all
 
 git filter-branch --env-filter;
-# git push --force --tags origin 'refs/heads/*'
-
-
+git push --force --tags origin 'refs/heads/*'
