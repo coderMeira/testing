@@ -19,7 +19,7 @@
 
 # Change these variables accordingly
 NAME="coderMeira"
-EMAIL="differentemail@differentemail.com"
+EMAIL="fredericomeiraa@gmail.com"
 
 # Setting right name and email on user's git config, to avoid having to run this script again in the future
 if ! git config --get user.name | grep "$NAME";
@@ -44,4 +44,4 @@ git filter-branch --force --commit-filter '
 ' --tag-name-filter cat -- --all
 
 git filter-branch --env-filter;
-git push --force --tags origin 'refs/heads/*'
+# git push --force --tags origin 'refs/heads/*'
